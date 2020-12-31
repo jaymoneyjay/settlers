@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"github.com/gdamore/tcell"
 )
@@ -19,6 +20,10 @@ func NewView() *View {
 	}
 
 	view.screen = screen
+	view.screen.Init()
+	view.screen.SetStyle(tcell.StyleDefault.
+		Foreground(tcell.ColorWhite).
+		Background(tcell.ColorBlack))
 	view.screen.Clear()
 
 	return view
@@ -36,4 +41,6 @@ func (v *View) drawBoard() {
 // RefreshScreen updates the view of the screen
 func (v *View) RefreshScreen() {
 	v.drawBoard()
+	time.Sleep(animationSpeed)
+	v.screen.Show()
 }

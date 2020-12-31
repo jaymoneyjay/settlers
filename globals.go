@@ -1,8 +1,14 @@
 package main
 
-import "github.com/gdamore/tcell"
+import (
+	"time"
 
-const ()
+	"github.com/gdamore/tcell"
+)
+
+const (
+	animationSpeed = 10 * time.Millisecond
+)
 
 type (
 	// View is the display engine
