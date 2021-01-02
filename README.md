@@ -1,2 +1,4 @@
 # settlers
-Go implementation of the game settlers of catan
+WORK IN PROGRESS. Go implementation of the game settlers of catan
+
+
