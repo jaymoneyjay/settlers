@@ -8,39 +8,44 @@ import (
 )
 
 // NewView returns a pointer to a new instance of View
-func NewView() *View {
-	view := new(View)
-	loader := NewLoader()
+func NewView() {
+
+	// Initialize globals
+	view = new(View)
+	loader = NewLoader()
+
+	var err error
 
 	view.boardTmpl = loader.load("boardAscii.txt")
 
-	screen, err := tcell.NewScreen()
+	screen, err = tcell.NewScreen()
 	if err != nil {
 		log.Fatal("NewScreen error:", err)
 	}
 
-	view.screen = screen
-	view.screen.Init()
-	view.screen.SetStyle(tcell.StyleDefault.
-		Foreground(tcell.ColorWhite).
-		Background(tcell.ColorBlack))
-	view.screen.Clear()
+	err = screen.Init()
+	if err != nil {
+		log.Fatal("Screen Init error:", err)
+	}
 
-	return view
+	screen.Clear()
 }
 
-func (v *View) drawBoard() {
+func (view *View) drawBoard() {
+	screen.SetStyle(tcell.StyleDefault.
+		Foreground(tcell.ColorWhite).
+		Background(tcell.ColorBlack))
 	styleBoard := tcell.StyleDefault.Foreground(tcell.ColorLightGray).Background(tcell.ColorBlack)
-	for y, line := range v.boardTmpl {
+	for y, line := range view.boardTmpl {
 		for x, c := range line {
-			v.screen.SetContent(x, y, c, nil, styleBoard)
+			screen.SetContent(x, y, c, nil, styleBoard)
 		}
 	}
 }
 
 // RefreshScreen updates the view of the screen
-func (v *View) RefreshScreen() {
-	v.drawBoard()
+func (view *View) RefreshScreen() {
+	view.drawBoard()
 	time.Sleep(animationSpeed)
-	v.screen.Show()
+	screen.Show()
 }
