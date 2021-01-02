@@ -11,8 +11,8 @@ import (
 func NewView() *View {
 	view := new(View)
 	loader := NewLoader()
-	loader.load("boardAscii.txt")
-	view.boardTmpl = loader.lines
+
+	view.boardTmpl = loader.load("boardAscii.txt")
 
 	screen, err := tcell.NewScreen()
 	if err != nil {

@@ -6,8 +6,8 @@ import "testing"
 func TestTxtLoader(t *testing.T) {
 	want := 43
 	loader := NewLoader()
-	loader.load("boardAscii.txt")
-	numberOfLines := len(loader.lines)
+	lines := loader.load("boardAscii.txt")
+	numberOfLines := len(lines)
 
 	if numberOfLines != want {
 		t.Errorf("Number of lines was incorrect, got: %d, want: %d.", numberOfLines, want)

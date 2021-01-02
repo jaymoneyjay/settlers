@@ -12,7 +12,7 @@ func NewLoader() *TxtLoader {
 	return loader
 }
 
-func (t *TxtLoader) load(file string) {
+func (t *TxtLoader) load(file string) []string {
 	f, err := os.Open(file)
 	if err != nil {
 		log.Fatal(err)
@@ -20,13 +20,16 @@ func (t *TxtLoader) load(file string) {
 
 	defer f.Close()
 
+	var lines []string
+
 	scanner := bufio.NewScanner(f)
 
 	for scanner.Scan() {
-		t.lines = append(t.lines, scanner.Text())
+		lines = append(lines, scanner.Text())
 	}
 
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
+	return lines
 }

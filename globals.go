@@ -19,6 +19,5 @@ type (
 
 	// TxtLoader loads and stores content of txt files line by line
 	TxtLoader struct {
-		lines []string
 	}
 )
