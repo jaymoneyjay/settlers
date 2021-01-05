@@ -19,7 +19,6 @@ const (
 	water
 	wood
 	brick
-	lumber
 	wool
 	grain
 	ore
@@ -57,9 +56,9 @@ type (
 
 	// Board models the settlers of catan game boar
 	Board struct {
-		tiles    [][]Tile
-		edges    [][]Edge
-		vertices [][]Vertex
+		tiles    [][]*Tile
+		edges    [][]*Edge
+		vertices [][]*Vertex
 	}
 )
 

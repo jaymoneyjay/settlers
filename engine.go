@@ -1,6 +1,8 @@
 package main
 
-import "github.com/gdamore/tcell"
+import (
+	"github.com/gdamore/tcell"
+)
 
 // NewEngine instantiates a new game engine
 func NewEngine() {
