@@ -1,8 +1,12 @@
 package main
 
 func main() {
-	NewBoard()
-	NewBoardCreator().SeedDefault(board)
-	NewView()
-	NewEngine()
+	board := NewBoard()
+	board.SeedDefault()
+
+	view := NewView()
+	view.initializeBoard(board)
+
+	engine := NewEngine(view)
+	engine.Run()
 }

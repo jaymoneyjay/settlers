@@ -1,17 +1,7 @@
 package main
 
-// BoardCreator is responsible for seeding different boards
-type BoardCreator struct {
-}
-
-// NewBoardCreator returns a pointer to a new instance of BoardCreator
-func NewBoardCreator() *BoardCreator {
-	creator := &BoardCreator{}
-	return creator
-}
-
 // SeedDefault initializes the specified board with a default board setup
-func (s *BoardCreator) SeedDefault(board *Board) {
+func (board *Board) SeedDefault() {
 
 	// Initialize resources
 	board.tiles[3][1] = NewTile(wood, 8)

@@ -28,6 +28,7 @@ type (
 	// View is the display engine
 	View struct {
 		boardTmpl []string
+		screen tcell.Screen
 	}
 
 	// TxtLoader loads and stores content of txt files line by line
@@ -36,6 +37,7 @@ type (
 
 	// Engine is the game engine of the settlers of catan game
 	Engine struct {
+		view *View
 	}
 
 	// Tile is a single hexagon of the game board representing a resource
@@ -60,12 +62,4 @@ type (
 		edges    [][]*Edge
 		vertices [][]*Vertex
 	}
-)
-
-var (
-	engine *Engine
-	view   *View
-	loader *TxtLoader
-	screen tcell.Screen
-	board  *Board
 )

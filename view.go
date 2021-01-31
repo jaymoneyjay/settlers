@@ -9,17 +9,12 @@ import (
 )
 
 // NewView returns a pointer to a new instance of View
-func NewView() {
+func NewView() *View {
 
-	// Initialize globals
-	view = new(View)
-	loader = NewLoader()
+	loader := NewLoader()
+	boardTmpl := loader.load("boardAscii.txt")
 
-	var err error
-
-	view.boardTmpl = loader.load("boardAscii.txt")
-
-	screen, err = tcell.NewScreen()
+	screen, err := tcell.NewScreen()
 	if err != nil {
 		log.Fatal("NewScreen error:", err)
 	}
@@ -30,12 +25,16 @@ func NewView() {
 	}
 
 	screen.Clear()
+	view := &View{
+		screen: screen,
+		boardTmpl: boardTmpl,
+	}
 
-	view.initializeBoard()
+	return view
 }
 
-func (view *View) initializeBoard() {
-	screen.SetStyle(tcell.StyleDefault.
+func (view *View) initializeBoard(board *Board) {
+	view.screen.SetStyle(tcell.StyleDefault.
 		Foreground(tcell.ColorWhite).
 		Background(tcell.ColorBlack))
 	styleBoard := tcell.StyleDefault.Foreground(tcell.ColorLightGray).Background(tcell.ColorBlack)
@@ -43,7 +42,7 @@ func (view *View) initializeBoard() {
 	// Draw board layout
 	for y, line := range view.boardTmpl {
 		for x, c := range line {
-			screen.SetContent(x, y, c, nil, styleBoard)
+			view.screen.SetContent(x, y, c, nil, styleBoard)
 		}
 	}
 
@@ -57,16 +56,16 @@ func (view *View) initializeBoard() {
 					yPos -= 3
 				}
 				numberString := fmt.Sprintf("%d", t.number)
-				tcPrint(xPos, yPos, numberString, styleBoard)
+				view.tcPrint(xPos, yPos, numberString, styleBoard)
 
 				xPos -= 2
 				yPos += 2
 				resourceString := t.PrintResource()
-				tcPrint(xPos, yPos, resourceString, styleBoard)
+				view.tcPrint(xPos, yPos, resourceString, styleBoard)
 			}
 		}
 	}
-	screen.Show()
+	view.screen.Show()
 }
 
 func (view *View) drawBoard() {
@@ -77,12 +76,12 @@ func (view *View) drawBoard() {
 func (view *View) RefreshScreen() {
 	view.drawBoard()
 	time.Sleep(animationSpeed)
-	screen.Show()
+	view.screen.Show()
 }
 
-func tcPrint(x, y int, text string, style tcell.Style) {
+func (view *View) tcPrint(x, y int, text string, style tcell.Style) {
 	for _, r := range text {
-		screen.SetContent(x, y, r, nil, style)
+		view.screen.SetContent(x, y, r, nil, style)
 		x++
 	}
 }

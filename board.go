@@ -1,7 +1,7 @@
 package main
 
 // NewBoard creates a new instantiation of Board
-func NewBoard() {
+func NewBoard() *Board {
 
 	// Initialize tiles
 	t := make([][]*Tile, 7, 7)
@@ -21,7 +21,7 @@ func NewBoard() {
 		v[i] = make([]*Vertex, 16, 16)
 	}
 
-	board = &Board{
+	return &Board{
 		tiles:    t,
 		edges:    e,
 		vertices: v,

@@ -5,9 +5,11 @@ import (
 )
 
 // NewEngine instantiates a new game engine
-func NewEngine() {
-	engine := new(Engine)
-	engine.Run()
+func NewEngine(view *View) *Engine {
+	engine := &Engine{
+		view: view,
+	}
+	return engine
 }
 
 // Run starts the game engine
@@ -16,7 +18,7 @@ func (e *Engine) Run() {
 
 	go func() {
 		for {
-			ev := screen.PollEvent()
+			ev := e.view.screen.PollEvent()
 			switch ev := ev.(type) {
 			case *tcell.EventKey:
 				switch ev.Key() {
@@ -34,9 +36,9 @@ loop:
 		case <-quit:
 			break loop
 		default:
-			view.RefreshScreen()
+			e.view.RefreshScreen()
 		}
 	}
 
-	screen.Fini()
+	e.view.screen.Fini()
 }
